@@ -17,7 +17,7 @@ jobs:
       uses: hashicorp/setup-terraform@v1
 
     - name: Set Terraform Cloud Token
-      run: echo "TFC_API_TOKEN=${{ secrets.TFC_API_TOKEN }}" >> $GITHUB_ENV
+      run: echo "TFE_TOKEN=${{ secrets.TFE_TOKEN }}" >> $GITHUB_ENV
 
     - name: Terraform Init
       run: terraform init
