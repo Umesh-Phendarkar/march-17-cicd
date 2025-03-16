@@ -18,23 +18,24 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 1.5.0  # You can specify your version here
+          terraform_version: 1.5.0  # Specify your Terraform version here
 
       # Step 3: Set TF_LOG environment variable for debugging (optional)
       - name: Set TF_LOG environment variable for debugging
         run: echo "TF_LOG=DEBUG" >> $GITHUB_ENV
 
-      # Step 4: Set Terraform Cloud Token as an environment variable (if using Terraform Cloud)
+      # Step 4: Set Terraform Cloud Token (if using Terraform Cloud, optional)
       - name: Set Terraform Cloud Token
         run: echo "TFE_TOKEN=${{ secrets.TFE_TOKEN }}" >> $GITHUB_ENV
 
-      # Step 5: Configure AWS credentials (for AWS-based providers; if using AWS)
-      - name: Set AWS credentials (if using AWS provider)
-        uses: aws-actions/configure-aws-credentials@v1
+      # Step 5: Set up Azure credentials
+      - name: Set up Azure credentials
+        uses: azure/login@v1
         with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: "us-east-1"  # Adjust as necessary
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       # Step 6: Terraform Initialization
       - name: Terraform Init
