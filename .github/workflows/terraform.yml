@@ -1,35 +1,15 @@
-## CI CD Pipeline
-name: 'Terraform Cloud Azure'
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
   terraform:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Set up Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: '1.4.6'
-
-    - name: Terraform Cloud login
-      run: |
-        terraform login
-      env:
-        TFC_TOKEN: ${{ secrets.TFC_API_TOKEN }}
-
-    - name: Initialize Terraform
-      run: terraform init
-
-    - name: Plan Terraform
-      run: terraform plan
-
-    - name: Apply Terraform
-      run: terraform apply -auto-approve
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set Terraform Cloud Token
+        run: echo "TFC_API_TOKEN=${{ secrets.TFC_API_TOKEN }}" >> $GITHUB_ENV
+      
+      - name: Terraform Init
+        run: terraform init
+      
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
