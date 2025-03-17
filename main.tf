@@ -12,7 +12,10 @@ provider "azurerm" {
   features {}
 
   skip_provider_registration = "true"
-
+}
+variable "prefix" {
+  default = "terraform"
+}
 resource "azurerm_resource_group" "example" {
   name     = "example-resource-group"
   location = "Central India"
